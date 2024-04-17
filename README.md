@@ -1,4 +1,7 @@
 # Statistiky
+## minimální čas příjezdu auta > maximální doba zpracování
+-> žádný čas ve frontách
+
 ### config.yaml
 ```yaml
 cars:
@@ -65,9 +68,10 @@ Registers
 Duration of Analysis:  18.002013803s
 Duration of Simulation:  6m55.212141629s
 ```
-minimální čas příjezdu auta > maximální doba zpracování -> žádný čas ve frontách
 
 ---
+## různé doby zpracování a počty stanic 
+-> někdy vznikne fronta, někdy ne
 ### config.yaml
 ```yaml
 cars:
@@ -134,9 +138,10 @@ Registers
 Duration of Analysis:  3.321718ms
 Duration of Simulation:  5.898450348s
 ```
-různé doby zpracování a počty stanic -> někdy vznikne fronta, někdy ne
 
 ---
+## dlouhá doba u kasy 
+-> všechny fronty se plní -> dlouhé fronty
 ### config.yaml
 ```yaml
 cars:
@@ -203,9 +208,10 @@ Registers
 Duration of Analysis:  2.829101ms
 Duration of Simulation:  5.99137594s
 ```
-dlouhá doba u kasy -> všechny fronty se plní -> dlouhé fronty
 
 ---
+## gas station bottleneck (2 stanice oproti 100/200)
+-> malá paralelizace -> dlouhé fronty -> přetečení datového typu -> zavádějící výsledky
 ### config.yaml
 ```yaml
 cars:
@@ -273,5 +279,3 @@ Registers
 Duration of Analysis:  1.836049ms
 Duration of Simulation:  11m14.411859925s
 ```
-gas station bottleneck (2 stanice oproti 100/200) -> malá paralelizace -> dlouhé fronty -> přetečení datového typu -> zavádějící výsledky
- ->
