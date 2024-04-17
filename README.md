@@ -1,5 +1,6 @@
 # Statistiky
 ### config.yaml
+```
 cars:
   count: 1500000
   ArrivalTimeMin: 1h
@@ -25,8 +26,9 @@ registers:
   count: 50000
   HandleTimeMin: 1ms
   HandleTimeMax: 3ms
-
+```
 ### výstup
+```
 Actual number of registers:  50000
 Effective number of registers:  40000
 1. Generating Cars
@@ -62,8 +64,10 @@ Registers
 
 Duration of Analysis:  18.002013803s
 Duration of Simulation:  6m55.212141629s
+```
 ---
 ### config.yaml
+```
 cars:
   count: 15000
   ArrivalTimeMin: 1ms
@@ -89,8 +93,9 @@ registers:
   count: 50000
   HandleTimeMin: 1ms
   HandleTimeMax: 3ms
-
+```
 ### výstup
+```
 Actual number of registers:  50000
 Effective number of registers:  600
 1. Generating Cars
@@ -126,7 +131,7 @@ Registers
 
 Duration of Analysis:  3.321718ms
 Duration of Simulation:  5.898450348s
-
+```
 
 
 
