@@ -6,12 +6,12 @@
   5. tvorba statistik
 
 ## Tvorba aut
-Čas příjezdu - pro první aktuální čas, jinak posunut od předchozího času příjezdu o náhodný čas. (nastaveno v config.yaml)
+Čas příjezdu - pro první aktuální čas, jinak posunut od předchozího času příjezdu o náhodný čas. (nastaveno v config.yaml)\
 Typ auta - náhodně generován dle dostupných stanic.
 
 ## Simulace
-Pro simulaci se využívá goroutin (počet určen počtem stanic a pokladen) a sdílených paměťových celků. (fronty aut)
-Autům se mění časy - příjezd ke stanici, doba strávená tankováním, doba příchodu ke kase a doba odjezdu od stanice.
+Pro simulaci se využívá goroutin (počet určen počtem stanic a pokladen) a sdílených paměťových celků. (fronty aut)\
+Autům se mění časy - příjezd ke stanici, doba strávená tankováním, doba příchodu ke kase a doba odjezdu od stanice.\
 Auta jsou přesouvána mezi frontami vnějšími (u každé stanice) a frontou vnitřní (auto zabírá stanici, fronta u pokladen). Při odjezdu jsou auta odstraněny z front celkově.
 
 # Statistiky
