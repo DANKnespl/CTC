@@ -45,11 +45,11 @@ func manage_cars(station *Station, carHeap *CarHeap, mu *sync.Mutex) {
 						minSubstation.mu.Unlock()
 					} else {
 						station.mu.Unlock()
-						time.Sleep(100 * time.Millisecond) // Check again after a short delay
+						time.Sleep(1 * time.Millisecond) // Check again after a short delay
 					}
 				} else {
 					station.mu.Unlock()
-					time.Sleep(100 * time.Millisecond) // Check again after a short delay
+					time.Sleep(1 * time.Millisecond) // Check again after a short delay
 				}
 			} else {
 				minSubstation.mu.Unlock()
@@ -68,7 +68,7 @@ func serve_car(car *Car, station *Substation, car_heap *CarHeap, mu *sync.Mutex)
 	mu.Unlock()
 
 	for (car.time_of_leaving == time.Time{}) {
-		time.Sleep(10 * time.Millisecond)
+		time.Sleep(1 * time.Millisecond)
 	}
 	//if car.Type == "lpg" && car.time_of_arrival.Before(car.time_of_station) {
 	//fmt.Println(car.ID, "TOA", car.time_of_arrival, "TOS", car.time_of_station, "TOR", car.time_of_register, "TOL", car.time_of_leaving, "\n\n ")
@@ -95,7 +95,6 @@ func manage_heap(registers []*Register, car_heap *CarHeap, mu *sync.Mutex) {
 		if minRegisterIndex != -1 {
 			mu.Lock()
 			if car_heap.Len() > 0 {
-
 				//registers[minRegisterIndex].mu.Unlock()
 				car := heap.Pop(car_heap).(*Car)
 				mu.Unlock()
@@ -120,7 +119,7 @@ func manage_heap(registers []*Register, car_heap *CarHeap, mu *sync.Mutex) {
 			} else {
 				//registers[minRegisterIndex].mu.Unlock()
 				mu.Unlock()
-				time.Sleep(100 * time.Millisecond) // Check again after a short delay
+				time.Sleep(1 * time.Millisecond) // Check again after a short delay
 			}
 		}
 	}

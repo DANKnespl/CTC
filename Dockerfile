@@ -14,6 +14,4 @@ COPY *.go ./
 
 RUN go build -o /gas-pump
 
-EXPOSE 8080
-
 CMD ["/gas-pump" ]

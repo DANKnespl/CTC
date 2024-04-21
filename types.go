@@ -3,10 +3,14 @@ package main
 import (
 	"container/list"
 	"fmt"
+	"log"
 	"math/rand"
+	"os"
 	"sort"
 	"sync"
 	"time"
+
+	"gopkg.in/yaml.v3"
 )
 
 // Define YAML structs to represent the configuration
@@ -66,7 +70,7 @@ type Register struct {
 	HandleTimeMax time.Duration
 	active        bool
 	memory        time.Time    //previous car time_of_leaving
-	mu            sync.RWMutex //may not be needed, but I am not risking it
+	mu            sync.RWMutex //may not be needed, but I am not risking it //I may have been a fool there
 }
 
 // Car Heap (minheap) as a Queue for registers
@@ -116,15 +120,17 @@ func construct_cars(count int64, arrivalTimeMin, arrivalTimeMax time.Duration) [
 	var cars []*Car
 	lastArrival := time.Now()
 	types := station_types
-	for i := 0; int64(i) < count; i++ {
-		car := &Car{
-			ID:              int64(i),
-			Type:            types[rand.Intn(len(types))],
-			time_of_arrival: lastArrival.Add(get_random_duration(arrivalTimeMin, arrivalTimeMax)),
-			time_of_leaving: time.Time{},
+	if len(types) > 0 {
+		for i := 0; int64(i) < count; i++ {
+			car := &Car{
+				ID:              int64(i),
+				Type:            types[rand.Intn(len(types))],
+				time_of_arrival: lastArrival.Add(get_random_duration(arrivalTimeMin, arrivalTimeMax)),
+				time_of_leaving: time.Time{},
+			}
+			cars = append(cars, car)
+			lastArrival = car.time_of_arrival
 		}
-		cars = append(cars, car)
-		lastArrival = car.time_of_arrival
 	}
 	return cars
 }
@@ -139,20 +145,36 @@ func construct_stations() {
 	for key := 0; key < len(keys); key++ {
 		station_type := keys[key]
 		station_conf := config.Stations[keys[key]]
-		var substations []*Substation
-		for i := 0; i < station_conf.Count; i++ {
-			substation := &Substation{
-				ServeTimeMin: station_conf.ServeTimeMin,
-				ServeTimeMax: station_conf.ServeTimeMax,
+		if station_conf.Count > 0 {
+
+			var substations []*Substation
+			for i := 0; i < station_conf.Count; i++ {
+				substation := &Substation{
+					ServeTimeMin: station_conf.ServeTimeMin,
+					ServeTimeMax: station_conf.ServeTimeMax,
+				}
+				substations = append(substations, substation)
 			}
-			substations = append(substations, substation)
+			station := &Station{
+				Type:        station_type,
+				Queue:       list.New(),
+				Substations: substations,
+			}
+			stations[station_type] = station
+			station_types = append(station_types, station_type)
 		}
-		station := &Station{
-			Type:        station_type,
-			Queue:       list.New(),
-			Substations: substations,
-		}
-		stations[station_type] = station
-		station_types = append(station_types, station_type)
+	}
+}
+
+func load_config(path string) {
+	// Read YAML file
+	data, err := os.ReadFile(path)
+	if err != nil {
+		log.Fatalf("error reading YAML file: %v", err)
+	}
+
+	// Unmarshal YAML data into Config struct
+	if err := yaml.Unmarshal(data, &config); err != nil {
+		log.Fatalf("error unmarshaling YAML: %v", err)
 	}
 }
